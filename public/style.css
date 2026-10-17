@@ -42,9 +42,11 @@ b,strong{font-weight:650}
 #disclaimer b{color:var(--amber);cursor:pointer;text-decoration:underline}
 
 /* ---------------- layout ---------------- */
-.view{display:none;flex:1 1 auto;overflow:auto}
+.view{display:none;flex:1 1 auto;overflow:auto;min-height:0}
 .view.on{display:flex}
-#view-console{gap:8px;padding:8px;overflow:hidden}
+/* Keep the sensor canvases at their full intrinsic size. On short screens the
+   console scrolls instead of clipping the PPI radar halfway through. */
+#view-console{gap:8px;padding:8px;overflow:auto;align-items:flex-start;scrollbar-width:thin;scrollbar-color:var(--line) var(--bg)}
 .col{display:flex;flex-direction:column;gap:8px;min-width:0}
 .col.left,.col.right{flex:0 0 372px}
 .col.mid{flex:1 1 auto}
@@ -198,7 +200,7 @@ svg.chart{display:block;width:100%;height:auto}
 .srcTable .cls{font-family:var(--mono);font-size:9px;white-space:nowrap}
 .cls.gov{color:var(--green)} .cls.open{color:#8cc6e0} .cls.asm{color:var(--red)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:1180px){#view-console{flex-direction:column;overflow:auto}.col.left,.col.right{flex:1 1 auto}.two{grid-template-columns:1fr}}
+@media(max-width:1180px){#view-console{flex-direction:column;overflow:auto;align-items:stretch}.col.left,.col.mid,.col.right{flex:0 0 auto;width:100%}.two{grid-template-columns:1fr}}
 
 #toast{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#1c2634;
   border:1px solid var(--line);color:var(--txt);padding:8px 15px;border-radius:4px;font-size:11.5px;
