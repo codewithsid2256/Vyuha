@@ -1,0 +1,19 @@
+# Render Blueprint — one-click deploy.
+# On Render: New +  →  Blueprint  →  pick this repo. Render reads this file and
+# creates the web service with the right build/start commands automatically.
+#
+# The app is zero-dependency, so there is nothing to install or build. It reads
+# the port Render injects via process.env.PORT (server.js already honours it),
+# so the start command must NOT pass --port.
+services:
+  - type: web
+    name: vyuha-console
+    runtime: node
+    plan: free
+    region: singapore          # closest to India; change if you prefer
+    buildCommand: npm install --no-audit --no-fund
+    startCommand: node server.js
+    healthCheckPath: /api/missions
+    envVars:
+      - key: NODE_VERSION
+        value: 20.20.2

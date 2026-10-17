@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VYUHA · व्यूह — C-UAS Threat Simulation Trainer</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E0%A4%B5%E0%A5%8D%E0%A4%AF%E0%A5%82%E0%A4%B9%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============================ TOP BAR ============================ -->
+  <header id="topbar">
+    <div class="brand">
+      <span class="deva">व्यूह</span>
+      <span class="lat">VYUHA</span>
+      <span class="sub">C-UAS Threat Simulation Trainer</span>
+    </div>
+    <div class="mission" id="missionLabel">no sortie loaded</div>
+    <div class="clock"><span id="clock">00:00.0</span><span class="dim" id="phaseLabel">standby</span></div>
+    <div class="gauges">
+      <div class="gauge" title="Cognitive workload index (NASA-TLX grounded model)">
+        <label>WORKLOAD</label>
+        <div class="bar"><i id="workloadBar"></i><u id="workloadLimit"></u></div>
+        <b id="workloadVal">0.00</b>
+      </div>
+      <div class="gauge" title="Tracks currently held">
+        <label>TRACKS</label><b id="trackCount">0</b>
+      </div>
+      <div class="gauge" title="Hostile tracks inside the defended area">
+        <label>BREACH</label><b id="breachCount" class="ok">0</b>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button data-view="console" class="on">CONSOLE</button>
+      <button data-view="aar">AAR</button>
+      <button data-view="unit">UNIT</button>
+      <button data-view="prov" class="prov">PROVENANCE</button>
+    </nav>
+  </header>
+
+  <div id="disclaimer">
+    TRAINING SIMULATION ONLY · no weapon control · no targeting algorithm · no classified data ·
+    every parameter carries a published source — click <b>PROVENANCE</b> to inspect it
+  </div>
+
+  <!-- ============================ CONSOLE ============================ -->
+  <main id="view-console" class="view on">
+
+    <section class="col left">
+      <div class="panel">
+        <div class="panel-h">RADAR PPI <span class="src" data-src="G5">source</span><span class="dim" id="radarMeta"></span></div>
+        <canvas id="ppi" width="360" height="360"></canvas>
+      </div>
+      <div class="panel">
+        <div class="panel-h">RF SPECTRUM <span class="src" data-src="O5">source</span><span class="dim" id="rfMeta"></span></div>
+        <canvas id="rfw" width="360" height="120"></canvas>
+        <div class="mini" id="rfLegend"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h">EO / IR GIMBAL <span class="src" data-src="G5">source</span></div>
+        <canvas id="eo" width="360" height="220"></canvas>
+        <div class="mini" id="eoMeta"></div>
+      </div>
+    </section>
+
+    <section class="col mid">
+      <div class="panel grow">
+        <div class="panel-h">TRACK TABLE <span class="dim" id="trackMeta"></span></div>
+        <div class="tracks" id="trackTable"></div>
+      </div>
+      <div class="panel grow">
+        <div class="panel-h">EVIDENCE LEDGER <span class="dim">belief is fused by Bayes, never shown as ground truth</span></div>
+        <div class="belief" id="beliefBars"></div>
+        <div class="ledger" id="ledger"></div>
+      </div>
+    </section>
+
+    <section class="col right">
+      <div class="panel">
+        <div class="panel-h">CLASSIFICATION <span class="src" data-src="G1">source</span></div>
+        <div class="classes" id="classButtons"></div>
+        <div class="conf">
+          <label>DECLARED CONFIDENCE <b id="confVal">—</b></label>
+          <input type="range" id="confSlider" min="5" max="99" value="60" disabled>
+          <div class="thresh">
+            <span class="t-warn" id="tWarn">warn 45%</span>
+            <span class="t-eng" id="tEng">engage 80%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">GRADUATED RESPONSE <span class="src" data-src="G12">source</span></div>
+        <div class="effectors" id="effectorButtons"></div>
+        <div class="doctrine" id="doctrineHint"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">EVENT LOG</div>
+        <div class="log" id="eventLog"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ SETUP ============================ -->
+  <div id="setup" class="modal">
+    <div class="modal-card">
+      <h1><span class="deva">व्यूह</span> VYUHA</h1>
+      <p class="tag">The Chakravyuha of the modern battlefield is a drone swarm. VYUHA trains those who break it.</p>
+      <p class="warn">Training simulation only. No weapon control, no targeting algorithm, no operational ROE, no classified data.
+      Every simulation parameter carries a published Government of India or open research source.</p>
+
+      <div class="row">
+        <label>Operator ID<input id="opId" value="trainee-01"></label>
+        <label>Seat
+          <select id="seatSel">
+            <option value="C2">C2 / Battle Captain</option>
+            <option value="SENSOR">Sensor Operator</option>
+            <option value="EW">EW Operator</option>
+            <option value="ENGAGE">Engagement Officer</option>
+          </select>
+        </label>
+      </div>
+
+      <h2>Sortie</h2>
+      <div class="seg" id="modeSeg">
+        <button data-mode="adaptive" class="on">ADAPTIVE <span class="dim">AI Director</span></button>
+        <button data-mode="scripted">SCRIPTED</button>
+        <button data-mode="custom">CUSTOM</button>
+      </div>
+
+      <div id="paneAdaptive" class="pane on">
+        <p class="hint" id="directorRationale">Loading the trainee model…</p>
+      </div>
+
+      <div id="paneScripted" class="pane">
+        <div class="missionList" id="missionList"></div>
+      </div>
+
+      <div id="paneCustom" class="pane">
+        <div class="grid2" id="customGrid"></div>
+      </div>
+
+      <div class="row spread">
+        <button id="btnStart" class="primary big">BEGIN SORTIE</button>
+        <button id="btnBench" class="ghost">View calibration</button>
+      </div>
+      <div class="bench" id="benchOut"></div>
+    </div>
+  </div>
+
+  <!-- ============================ AAR ============================ -->
+  <main id="view-aar" class="view">
+    <div id="aarEmpty" class="empty">No sortie has been scored yet. Fly one from the CONSOLE.</div>
+    <div id="aarBody" class="aar hidden"></div>
+  </main>
+
+  <!-- ============================ UNIT ============================ -->
+  <main id="view-unit" class="view">
+    <div id="unitBody" class="aar"></div>
+  </main>
+
+  <!-- ============================ PROVENANCE ============================ -->
+  <main id="view-prov" class="view">
+    <div id="provBody" class="aar"></div>
+  </main>
+
+  <div id="toast"></div>
+</div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

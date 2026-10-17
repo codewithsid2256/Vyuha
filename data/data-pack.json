@@ -1,0 +1,462 @@
+{
+  "pack": {
+    "name": "VYUHA Data Pack",
+    "version": "1.0.0",
+    "generated": "2026-10-17",
+    "policy": "Public-domain Government of India and authoritative open sources only. No classified or restricted data. Every parameter carries a source record.",
+    "confidence_classes": {
+      "published-spec": "Value appears in an official government / PSU published document",
+      "govt-release": "Value reported from a government press release or trial announcement",
+      "parliament": "Value from a Lok Sabha / Rajya Sabha answer",
+      "open-research": "Authoritative non-government open dataset or peer-reviewed literature",
+      "assumption": "ENGINEERING ASSUMPTION BY THE TEAM - shown in RED in the provenance panel"
+    }
+  },
+
+  "sources": {
+    "G1": {
+      "org": "Ministry of Civil Aviation (Drone Rules 2021)",
+      "doc": "PIB Backgrounder - The Drone Rules, 2021",
+      "url": "https://static.pib.gov.in/writereaddata/specificdocs/documents/2022/jan/doc202212810701.pdf",
+      "class": "published-spec",
+      "accessed": "2026-10-17",
+      "note": "Official weight taxonomy and Green/Yellow/Red zone definitions."
+    },
+    "G2": {
+      "org": "DGCA - Digital Sky Platform",
+      "doc": "Interactive airspace map (Green / Yellow / Red zones)",
+      "url": "https://digitalsky.dgca.gov.in",
+      "class": "published-spec",
+      "accessed": "2026-10-17",
+      "note": "PIB backgrounder states the airspace map is freely available without login."
+    },
+    "G3": {
+      "org": "DGCA - Digital Sky Platform",
+      "doc": "Certified RPAS list (type certified and enlisted UAS models)",
+      "url": "https://digitalsky.dgca.gov.in/certified_rpas",
+      "class": "published-spec",
+      "accessed": "2026-10-17",
+      "note": "Real UAS models operating in Indian airspace - used for the FRIENDLY / CIVILIAN library, not invented models."
+    },
+    "G4": {
+      "org": "Ministry of Civil Aviation",
+      "doc": "Rajya Sabha / Lok Sabha answers on registered UAS and type certificates",
+      "url": "https://www.pib.gov.in",
+      "class": "parliament",
+      "accessed": "2026-10-17",
+      "note": "96+ UAS type certificates; 29,500+ registered drones with state-wise distribution."
+    },
+    "G5": {
+      "org": "Bharat Electronics Limited (Defence PSU, Ministry of Defence)",
+      "doc": "Anti-Drone System (D4) - product page",
+      "url": "https://bel-india.in/product/anti-drone-system/",
+      "class": "published-spec",
+      "accessed": "2026-10-17",
+      "note": "D4 configuration: radar detection & tracking, EO (CCD + IR + LRF), RF detection & jamming, GPS jamming/spoofing, laser DEW, C3."
+    },
+    "G6": {
+      "org": "DRDO / BEL (public reporting)",
+      "doc": "Reported D4 performance envelope",
+      "url": "https://bel-india.in/product/anti-drone-system/",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "Radar detection ~4 km, jamming ~2 km, laser kill ~1-2.5 km as publicly reported. Used as a CALIBRATION BASELINE, not a certified specification.",
+      "reverify": true
+    },
+    "G7": {
+      "org": "Ministry of Defence",
+      "doc": "Request for Information - Air Defence Fire Control Radar - Drone Detector (ADFCR-DD), Aug 2025",
+      "url": "https://www.indiatoday.in/amp/indian-army-rfi-drone-detection-radars-air-defence-strengthening-2768269-2025-08-08",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "Official task chain: detect, track, CLASSIFY and neutralise - from fighters down to small low-RCS drones.",
+      "reverify": true
+    },
+    "G8": {
+      "org": "DRDO - Centre for High Energy Systems & Sciences (CHESS)",
+      "doc": "IDD&IS Mk-II (10 kW) and Mk-IIA / Sahastra Shakti (30 kW) public trial releases",
+      "url": "https://en.wikipedia.org/wiki/Integrated_Drone_Detection_%26_Interdiction_System",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "10 kW laser ~2 km; 30 kW trials engaged a fixed-wing UAV at long range and deterred a 7-drone swarm (13 Apr 2025).",
+      "reverify": true
+    },
+    "G9": {
+      "org": "DRDO",
+      "doc": "RFP for a 50-drone swarm (>70% indigenous content)",
+      "url": "https://www.theweek.in/news/defence/2026-08-01/indias-next-generation-of-swarm-drones-why-drdo-wants-50-drones-to-fly-as-one.html",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "Swarm size envelope used to bound the procedural swarm generator.",
+      "reverify": true
+    },
+    "G10": {
+      "org": "India Meteorological Department",
+      "doc": "Public API reference - present weather codes, visibility, temperature, dew point",
+      "url": "https://api.imd.gov.in/public/api_reference.html",
+      "class": "published-spec",
+      "accessed": "2026-10-17",
+      "note": "Weather codes 11/12/40-49 are fog and ice-fog states. Drives the atmospheric transmission model."
+    },
+    "G11": {
+      "org": "ISRO - National Remote Sensing Centre (Bhuvan / NOEDA)",
+      "doc": "CartoDEM 1 arc-second DEM, Resourcesat LISS-III / AWiFS, LULC",
+      "url": "https://bhuvan.nrsc.gov.in",
+      "class": "published-spec",
+      "accessed": "2026-10-17",
+      "note": "Free download of CartoDEM (20 tiles/day) and Resourcesat products. Drives terrain masking and clutter."
+    },
+    "G12": {
+      "org": "Ministry of Defence",
+      "doc": "Year-End Review 2025 via PIB / press",
+      "url": "https://timesofindia.indiatimes.com/india/791-drone-incursions-in-2025-defense-ministry-cites-pakistan-backed-infiltration-attempts-spoofers-jammers-counter-threat/articleshow/126275861.cms",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "791 drone incursions on the western border in 2025 (9 J&K IB, 782 Punjab/Rajasthan IB); 237 neutralised - 5 with war-like stores, 72 with narcotics, 161 without payload.",
+      "reverify": true
+    },
+    "G13": {
+      "org": "Ministry of Home Affairs / Bureau of Civil Aviation Security",
+      "doc": "Directive mandating counter-UAS deployment at civil airports",
+      "url": "https://www.mha.gov.in",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "Justifies the civil critical-infrastructure scenario pack.",
+      "reverify": true
+    },
+    "G16": {
+      "org": "Ministry of Defence / Defence Acquisition Council",
+      "doc": "Public procurement releases (23 x IDD&IS ~ Rs 400 crore; 16 x IDD&IS Mk-II for Army and IAF)",
+      "url": "https://www.pib.gov.in",
+      "class": "govt-release",
+      "accessed": "2026-10-17",
+      "note": "Per-system unit cost used for the Cost-of-Exchange curve.",
+      "reverify": true
+    },
+    "O1": {
+      "org": "OpenSky Network (open research data)",
+      "doc": "Open ADS-B aircraft traffic",
+      "url": "https://opensky-network.org",
+      "class": "open-research",
+      "accessed": "2026-10-17",
+      "note": "Realistic friendly air traffic for IFF and deconfliction drills."
+    },
+    "O2": {
+      "org": "eBird / Zoological Survey of India (open data)",
+      "doc": "Bird observation records",
+      "url": "https://ebird.org",
+      "class": "open-research",
+      "accessed": "2026-10-17",
+      "note": "Realistic bird clutter for false-alarm training."
+    },
+    "O3": {
+      "org": "NASA Ames Research Center - Human Performance Group",
+      "doc": "NASA Task Load Index (NASA-TLX)",
+      "url": "https://en.wikipedia.org/wiki/NASA-TLX",
+      "class": "open-research",
+      "accessed": "2026-10-17",
+      "note": "Validated 6-axis workload instrument; developed over 40+ laboratory simulations, cited in 4,400+ studies."
+    },
+    "O5": {
+      "org": "Open academic literature (IEEE and related)",
+      "doc": "Drone RF fingerprinting - 2.4 / 5.8 GHz FHSS control links",
+      "url": "https://ieeexplore.ieee.org",
+      "class": "open-research",
+      "accessed": "2026-10-17",
+      "note": "Control-link band, hop rate and protocol family priors for the RF detector."
+    },
+    "O6": {
+      "org": "Open radar and electro-optical literature",
+      "doc": "Swerling target fluctuation models, small-UAS radar cross-section, Johnson criteria, ground clutter sigma-naught",
+      "url": "https://en.wikipedia.org/wiki/Swerling_target_models",
+      "class": "open-research",
+      "accessed": "2026-10-17",
+      "note": "Provides the fluctuation model, the RCS priors per class, the Johnson-criteria pixel counts and the clutter coefficient class values."
+    }
+  },
+
+  "uas_taxonomy": {
+    "source": "G1",
+    "classes": [
+      { "id": "NANO",   "label": "Nano",   "mauw_min_g": 0,    "mauw_max_g": 250 },
+      { "id": "MICRO",  "label": "Micro",  "mauw_min_g": 250,  "mauw_max_g": 2000 },
+      { "id": "SMALL",  "label": "Small",  "mauw_min_g": 2000, "mauw_max_g": 25000 },
+      { "id": "MEDIUM", "label": "Medium", "mauw_min_g": 25000,"mauw_max_g": 150000 },
+      { "id": "LARGE",  "label": "Large",  "mauw_min_g": 150000,"mauw_max_g": null }
+    ]
+  },
+
+  "airspace_zones": {
+    "source": "G2",
+    "zones": [
+      { "id": "GREEN",  "label": "Green",  "engagement_authorised": true,  "alt_cap_ft": 400, "note": "No permission required for civil operation; AD engagement authorised inside a declared AD bubble." },
+      { "id": "YELLOW", "label": "Yellow", "engagement_authorised": true,  "alt_cap_ft": 200, "note": "ATC clearance zone. Engagement requires explicit C2 authorisation - deconfliction mandatory." },
+      { "id": "RED",    "label": "Red",    "engagement_authorised": false, "alt_cap_ft": 0,   "note": "No-drone zone. Kinetic engagement prohibited in this trainer's ROE model - soft-kill or escalation to higher HQ only." }
+    ]
+  },
+
+  "sensors": [
+    {
+      "id": "RADAR-1",
+      "label": "Drone Detection & Tracking Radar",
+      "kind": "radar",
+      "source": "G5",
+      "params": {
+        "peak_power_w":        { "value": 400,   "source": "assumption", "note": "Portable Ku-band drone-detection radar class. ASSUMPTION." },
+        "antenna_gain_db":     { "value": 33,    "source": "assumption", "note": "ASSUMPTION - typical phased / mechanically scanned panel." },
+        "integration_gain_db": { "value": 9,     "source": "O6",         "note": "Coherent integration over ~8 dwells. Without it a 0.01 m2 micro-drone is undetectable at any useful range." },
+        "freq_ghz":            { "value": 16.0,  "source": "assumption", "note": "Ku-band drone detector class. ASSUMPTION." },
+        "noise_figure_db":     { "value": 4.0,   "source": "assumption", "note": "ASSUMPTION." },
+        "bandwidth_mhz":       { "value": 20,    "source": "assumption", "note": "ASSUMPTION." },
+        "scan_period_s":       { "value": 2.5,   "source": "assumption", "note": "ASSUMPTION - sets the minimum detection latency." },
+        "system_loss_db":      { "value": 6.0,   "source": "assumption", "note": "ASSUMPTION." },
+        "pfa":                 { "value": 1e-6,  "source": "assumption", "note": "ASSUMPTION." },
+        "max_range_m":         { "value": 4000,  "source": "G6",         "note": "Publicly reported D4 radar detection range - used as the calibrated ceiling." },
+        "az_fov_deg":          { "value": 360,   "source": "assumption", "note": "ASSUMPTION." },
+        "el_fov_deg":          { "value": 60,    "source": "assumption", "note": "ASSUMPTION." },
+        "clutter_coeff":       { "value": 0.00001, "source": "O6",       "note": "Residual ground-clutter sigma-naught AFTER Doppler/MTI processing. A micro-drone is a genuinely hard target - see the calibration note in the provenance panel." }
+      }
+    },
+    {
+      "id": "RF-1",
+      "label": "RF Drone Detector (DF / protocol)",
+      "kind": "rf",
+      "source": "G5",
+      "params": {
+        "sensitivity_dbm":     { "value": -105,  "source": "assumption", "note": "ASSUMPTION - wideband DF receiver class." },
+        "rx_gain_db":          { "value": 6,     "source": "assumption", "note": "ASSUMPTION." },
+        "max_range_m":         { "value": 3000,  "source": "G6",         "note": "Publicly reported D4 jamming/detection envelope class - calibrated ceiling." },
+        "scan_period_s":       { "value": 0.8,   "source": "assumption", "note": "ASSUMPTION - passive receiver sweeps fast." },
+        "pol_loss_db":         { "value": 3.0,   "source": "assumption", "note": "ASSUMPTION - polarisation mismatch on a tumbling airframe." }
+      }
+    },
+    {
+      "id": "EO-1",
+      "label": "EO/IR Gimbal (CCD + IR + LRF)",
+      "kind": "eo",
+      "source": "G5",
+      "params": {
+        "focal_length_mm":     { "value": 240,   "source": "assumption", "note": "ASSUMPTION - long-range EO/IR gimbal class." },
+        "sensor_width_mm":     { "value": 6.4,   "source": "assumption", "note": "ASSUMPTION." },
+        "px_horizontal":       { "value": 1920,  "source": "assumption", "note": "ASSUMPTION." },
+        "px_required_class":   { "value": 6,     "source": "O6",         "note": "Johnson-criteria class: pixels across target for reliable CLASSIFICATION." },
+        "px_required_detect":  { "value": 2,     "source": "O6",         "note": "Johnson-criteria class: pixels across target for DETECTION." },
+        "px_required_id":      { "value": 30,    "source": "O6",         "note": "Johnson-criteria class: pixels across target for reliable IDENTIFICATION." },
+        "slew_time_s":         { "value": 3.0,   "source": "assumption", "note": "ASSUMPTION - cue-to-stare time." },
+        "scan_period_s":       { "value": 3.0,   "source": "assumption", "note": "ASSUMPTION." }
+      }
+    },
+    {
+      "id": "ACO-1",
+      "label": "Acoustic Array",
+      "kind": "acoustic",
+      "source": "assumption",
+      "params": {
+        "ref_range_m":         { "value": 150,   "source": "assumption", "note": "ASSUMPTION - reference acquisition range for a commercial quad." },
+        "path_exponent":       { "value": 2.2,   "source": "assumption", "note": "ASSUMPTION - spherical spreading plus excess attenuation." },
+        "scan_period_s":       { "value": 1.2,   "source": "assumption", "note": "ASSUMPTION." },
+        "max_range_m":         { "value": 900,   "source": "assumption", "note": "ASSUMPTION." }
+      }
+    }
+  ],
+
+  "effectors": [
+    {
+      "id": "MONITOR", "label": "Monitor / Passive Track", "level": 0, "cost_inr": 0,
+      "range_m": 0, "effect_time_s": 0, "works_on": ["*"], "collateral_risk": 0.0,
+      "note": "No action. Correct when the threat is outside the defended area and time permits."
+    },
+    {
+      "id": "WARN", "label": "Warn (loudhailer / visual / dazzle)", "level": 1, "cost_inr": 500,
+      "range_m": 800, "effect_time_s": 4, "works_on": ["COMMERCIAL_QUAD", "BIRD", "CIVILIAN_DRONE", "OWN_UAV"],
+      "collateral_risk": 0.0, "note": "Lowest-cost escalation. Effective on a cooperative operator."
+    },
+    {
+      "id": "JAM", "label": "Directional RF Jammer (soft kill)", "level": 2, "cost_inr": 20000,
+      "range_m": 2000, "effect_time_s": 6,
+      "works_on": ["COMMERCIAL_QUAD", "FPV", "HEX_BOMBER", "FIXED_WING_SPOTTER", "LOITERING_MUNITION", "CIVILIAN_DRONE", "OWN_UAV"],
+      "collateral_risk": 0.02, "ew_fratricide": true,
+      "source": "G5", "note": "RF control-link denial. USELESS against autonomous / fibre-optic threats."
+    },
+    {
+      "id": "SPOOF", "label": "GNSS Jam / Spoof (soft kill)", "level": 2, "cost_inr": 35000,
+      "range_m": 1500, "effect_time_s": 10,
+      "works_on": ["COMMERCIAL_QUAD", "HEX_BOMBER", "FIXED_WING_SPOTTER", "LOITERING_MUNITION", "CIVILIAN_DRONE", "OWN_UAV"],
+      "collateral_risk": 0.05, "ew_fratricide": true,
+      "source": "G5", "note": "Navigation denial. Requires the target to be GNSS-dependent."
+    },
+    {
+      "id": "NET", "label": "Interceptor / Net UAV (non-lethal)", "level": 3, "cost_inr": 400000,
+      "range_m": 1200, "effect_time_s": 12, "pk": 0.55,
+      "works_on": ["COMMERCIAL_QUAD", "FPV", "CIVILIAN_DRONE", "OWN_UAV"],
+      "collateral_risk": 0.05, "note": "Kinetic capture. Too slow against a diving FPV."
+    },
+    {
+      "id": "GUN", "label": "AD Gun / RWS 7.62-12.7 mm (hard kill)", "level": 4, "cost_inr": 150000,
+      "range_m": 1500, "effect_time_s": 2, "pk": 0.45,
+      "works_on": ["COMMERCIAL_QUAD", "FPV", "HEX_BOMBER", "FIBER_OPTIC_FPV", "FIXED_WING_SPOTTER", "LOITERING_MUNITION"],
+      "collateral_risk": 0.25,
+      "source": "G5", "note": "Highest collateral risk. Prohibited over populated ground in this ROE model."
+    },
+    {
+      "id": "LASER", "label": "Laser DEW 10 kW (hard kill)", "level": 4, "cost_inr": 4000000,
+      "range_m": 2000, "effect_time_s": 5, "pk": 0.80, "dwell_required_s": 4,
+      "works_on": ["COMMERCIAL_QUAD", "FPV", "HEX_BOMBER", "FIBER_OPTIC_FPV", "FIXED_WING_SPOTTER", "LOITERING_MUNITION"],
+      "collateral_risk": 0.05,
+      "source": "G8", "note": "10 kW class, ~2 km - publicly reported IDD&IS Mk-II envelope. Weather sensitive."
+    }
+  ],
+
+  "threats": [
+    { "id": "COMMERCIAL_QUAD", "label": "Commercial quadcopter (recon)", "uas_class": "MICRO",
+      "rcs_m2": 0.01, "speed_ms": 15, "alt_m": 120, "size_m": 0.35, "noise_db_at_150m": 62,
+      "rf": { "band_ghz": 2.4, "eirp_dbm": 20, "hop_rate_hz": 400, "protocol": "FHSS" },
+      "autonomous": false, "gnss_dependent": true, "armed": false, "hostile": true,
+      "source": "G12", "note": "161 of the 237 drones neutralised in 2025 carried no payload - reconnaissance is the dominant case." },
+
+    { "id": "HEX_BOMBER", "label": "Heavy hexacopter bomber", "uas_class": "SMALL",
+      "rcs_m2": 0.05, "speed_ms": 20, "alt_m": 150, "size_m": 1.1, "noise_db_at_150m": 70,
+      "rf": { "band_ghz": 5.8, "eirp_dbm": 24, "hop_rate_hz": 200, "protocol": "FHSS" },
+      "autonomous": false, "gnss_dependent": true, "armed": true, "hostile": true,
+      "source": "G12", "note": "5 drones with war-like stores were neutralised in 2025." },
+
+    { "id": "FPV", "label": "FPV kamikaze", "uas_class": "MICRO",
+      "rcs_m2": 0.008, "speed_ms": 40, "alt_m": 40, "size_m": 0.30, "noise_db_at_150m": 68,
+      "rf": { "band_ghz": 5.8, "eirp_dbm": 25, "hop_rate_hz": 0, "protocol": "ANALOG_VIDEO" },
+      "autonomous": false, "gnss_dependent": false, "armed": true, "hostile": true,
+      "source": "O5", "note": "Analogue video downlink, no GNSS - spoofing is useless, jamming the video link is the only soft-kill." },
+
+    { "id": "FIBER_OPTIC_FPV", "label": "Fibre-optic FPV (RF silent)", "uas_class": "MICRO",
+      "rcs_m2": 0.008, "speed_ms": 45, "alt_m": 25, "size_m": 0.30, "noise_db_at_150m": 70,
+      "rf": null, "autonomous": true, "gnss_dependent": false, "armed": true, "hostile": true,
+      "source": "O5", "note": "RF COMPLETELY SILENT. The single most important recognition lesson in modern counter-drone warfare." },
+
+    { "id": "FIXED_WING_SPOTTER", "label": "Fixed-wing artillery spotter", "uas_class": "SMALL",
+      "rcs_m2": 0.08, "speed_ms": 30, "alt_m": 400, "size_m": 2.4, "noise_db_at_150m": 60,
+      "rf": { "band_ghz": 0.9, "eirp_dbm": 27, "hop_rate_hz": 50, "protocol": "TELEM" },
+      "autonomous": true, "gnss_dependent": true, "armed": false, "hostile": true,
+      "source": "G8", "note": "DRDO laser trials engaged a fixed-wing UAV at long range." },
+
+    { "id": "LOITERING_MUNITION", "label": "Loitering munition (Shahed-class)", "uas_class": "MEDIUM",
+      "rcs_m2": 0.10, "speed_ms": 50, "alt_m": 300, "size_m": 3.5, "noise_db_at_150m": 78,
+      "rf": { "band_ghz": 0.433, "eirp_dbm": 20, "hop_rate_hz": 0, "protocol": "TERSE" },
+      "autonomous": true, "gnss_dependent": true, "armed": true, "hostile": true,
+      "source": "G12", "note": "War-like stores category." },
+
+    { "id": "DECOY", "label": "Cheap decoy / saturation drone", "uas_class": "NANO",
+      "rcs_m2": 0.004, "speed_ms": 25, "alt_m": 90, "size_m": 0.25, "noise_db_at_150m": 58,
+      "rf": { "band_ghz": 2.4, "eirp_dbm": 14, "hop_rate_hz": 400, "protocol": "FHSS" },
+      "autonomous": true, "gnss_dependent": false, "armed": false, "hostile": true,
+      "source": "G9", "note": "Swarm saturation element - designed to absorb effectors." },
+
+    { "id": "OWN_UAV", "label": "Own-force tactical UAV", "uas_class": "SMALL",
+      "rcs_m2": 0.06, "speed_ms": 28, "alt_m": 350, "size_m": 2.0, "noise_db_at_150m": 61,
+      "rf": { "band_ghz": 2.4, "eirp_dbm": 23, "hop_rate_hz": 300, "protocol": "IFF_LINK" },
+      "autonomous": false, "gnss_dependent": true, "armed": false, "hostile": false, "friendly": true,
+      "source": "G3", "note": "Fratricide and EW-fratricide training track." },
+
+    { "id": "CIVILIAN_DRONE", "label": "Civilian drone (legal, Green zone)", "uas_class": "MICRO",
+      "rcs_m2": 0.012, "speed_ms": 12, "alt_m": 90, "size_m": 0.4, "noise_db_at_150m": 60,
+      "rf": { "band_ghz": 2.4, "eirp_dbm": 19, "hop_rate_hz": 400, "protocol": "FHSS" },
+      "autonomous": false, "gnss_dependent": true, "armed": false, "hostile": false, "friendly": false,
+      "source": "G3", "note": "Registered UAS from the DGCA Certified RPAS list, operating legally." },
+
+    { "id": "BIRD", "label": "Bird / flock", "uas_class": null,
+      "rcs_m2": 0.005, "speed_ms": 12, "alt_m": 60, "size_m": 0.35, "noise_db_at_150m": 0,
+      "rf": null, "autonomous": false, "gnss_dependent": false, "armed": false, "hostile": false, "friendly": false,
+      "source": "O2", "note": "Primary false-alarm source. Radar-visible, RF-silent, thermally warm." },
+
+    { "id": "CLUTTER", "label": "Ground / vegetation clutter return", "uas_class": null,
+      "rcs_m2": 0.02, "speed_ms": 3, "alt_m": 15, "size_m": 1.0, "noise_db_at_150m": 0,
+      "rf": null, "autonomous": false, "gnss_dependent": false, "armed": false, "hostile": false, "friendly": false,
+      "source": "O6", "note": "Anomalous propagation and vegetation returns." }
+  ],
+
+  "weather": [
+    { "id": "CLEAR",       "label": "Clear",        "visibility_m": 20000, "code": 0,  "attenuation_db_per_km": 0.02, "source": "G10" },
+    { "id": "HAZE",        "label": "Haze / dust",  "visibility_m": 4000,  "code": 5,  "attenuation_db_per_km": 0.40, "source": "G10" },
+    { "id": "MIST",        "label": "Mist",         "visibility_m": 6000,  "code": 10, "attenuation_db_per_km": 0.25, "source": "G10" },
+    { "id": "FOG",         "label": "Fog",          "visibility_m": 400,   "code": 45, "attenuation_db_per_km": 3.50, "source": "G10", "note": "IMD present-weather code 45: fog/ice fog, sky invisible, no appreciable change." },
+    { "id": "RAIN",        "label": "Moderate rain","visibility_m": 3000,  "code": 63, "attenuation_db_per_km": 1.20, "source": "G10" }
+  ],
+
+  "terrain": [
+    { "id": "URBAN",  "label": "Urban",  "clutter_factor": 6.0, "mask_prob": 0.35, "populated": true,  "source": "G11" },
+    { "id": "RURAL",  "label": "Rural",  "clutter_factor": 1.0, "mask_prob": 0.10, "populated": false, "source": "G11" },
+    { "id": "MOUNTAIN","label": "Mountain","clutter_factor": 4.0, "mask_prob": 0.55, "populated": false, "source": "G11" }
+  ],
+
+  "light": [
+    { "id": "DAY",   "label": "Day",   "ir_contrast": 0.55, "visible_contrast": 1.00, "crossover": false, "source": "assumption" },
+    { "id": "DUSK",  "label": "Dusk",  "ir_contrast": 0.20, "visible_contrast": 0.35, "crossover": true,  "source": "assumption", "note": "THERMAL CROSSOVER - target and background reach the same temperature; IR performance collapses." },
+    { "id": "NIGHT", "label": "Night", "ir_contrast": 0.75, "visible_contrast": 0.08, "crossover": false, "source": "assumption" }
+  ],
+
+  "ew_levels": [
+    { "id": "NONE", "label": "No EW",     "rf_noise_db": 0,  "radar_noise_db": 0, "iff_failure_prob": 0.00, "source": "assumption" },
+    { "id": "LOW",  "label": "Low EW",    "rf_noise_db": 6,  "radar_noise_db": 4, "iff_failure_prob": 0.10, "source": "assumption" },
+    { "id": "HIGH", "label": "Heavy EW",  "rf_noise_db": 15, "radar_noise_db": 10,"iff_failure_prob": 0.30, "source": "assumption" }
+  ],
+
+  "threat_mix_weights": {
+    "source": "G12",
+    "note": "Weighted by the MoD 2025 neutralisation breakdown: 161 no-payload (recon), 72 narcotics (smuggling quad/hex), 5 war-like stores.",
+    "HOSTILE_POOL": [
+      { "id": "COMMERCIAL_QUAD",    "w": 0.55 },
+      { "id": "FPV",                "w": 0.14 },
+      { "id": "HEX_BOMBER",         "w": 0.09 },
+      { "id": "FIBER_OPTIC_FPV",    "w": 0.06 },
+      { "id": "FIXED_WING_SPOTTER", "w": 0.07 },
+      { "id": "LOITERING_MUNITION", "w": 0.03 },
+      { "id": "DECOY",              "w": 0.06 }
+    ],
+    "AMBIENT_POOL": [
+      { "id": "BIRD",            "w": 0.45 },
+      { "id": "CIVILIAN_DRONE",  "w": 0.35 },
+      { "id": "OWN_UAV",         "w": 0.20 }
+    ]
+  },
+
+  "doctrine": {
+    "source": "G12",
+    "note": "The MoD 2025 review states that effective employment of own spoofers and jammers significantly countered the drone threat - soft kill is the doctrinal first line.",
+    "confidence_threshold_engage": 0.80,
+    "confidence_threshold_warn": 0.45,
+    "graduated_response": ["MONITOR", "WARN", "JAM", "SPOOF", "NET", "GUN", "LASER"],
+    "min_sufficient_level": {
+      "COMMERCIAL_QUAD": "JAM",
+      "HEX_BOMBER": "JAM",
+      "FIXED_WING_SPOTTER": "SPOOF",
+      "FPV": "JAM",
+      "FIBER_OPTIC_FPV": "GUN",
+      "LOITERING_MUNITION": "LASER",
+      "DECOY": "MONITOR",
+      "OWN_UAV": "MONITOR",
+      "CIVILIAN_DRONE": "WARN",
+      "BIRD": "MONITOR",
+      "CLUTTER": "MONITOR"
+    }
+  },
+
+  "workload": {
+    "source": "O3",
+    "note": "NASA-TLX is a validated 6-axis workload instrument (mental, physical, temporal, effort, performance, frustration). The degradation curve below is the team's own calibration and is flagged as an assumption.",
+    "w_max": 1.0,
+    "alpha_tracks": 0.14,
+    "beta_decisions": 0.10,
+    "gamma_comms": 0.08,
+    "delta_time_pressure": 0.06,
+    "latency_penalty_per_overload": 0.6,
+    "error_penalty_per_overload": 0.18,
+    "tlx_axes": ["Mental Demand", "Physical Demand", "Temporal Demand", "Effort", "Performance", "Frustration"]
+  },
+
+  "economics": {
+    "source": "G16",
+    "threat_cost_inr": {
+      "COMMERCIAL_QUAD": 40000, "HEX_BOMBER": 250000, "FPV": 30000, "FIBER_OPTIC_FPV": 90000,
+      "FIXED_WING_SPOTTER": 600000, "LOITERING_MUNITION": 2000000, "DECOY": 8000,
+      "OWN_UAV": 3000000, "CIVILIAN_DRONE": 150000, "BIRD": 0, "CLUTTER": 0
+    }
+  }
+}

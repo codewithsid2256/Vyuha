@@ -1,0 +1,29 @@
+{
+  "name": "vyuha",
+  "version": "1.0.0",
+  "description": "व्यूह / VYUHA — AI-Enabled Drone & Counter-Drone Threat Simulation Trainer. Evidence-grounded C-UAS trainer: every parameter carries a Government-of-India source, and detection emerges from solved sensor physics rather than a script.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js --port 8099 --host 0.0.0.0",
+    "test": "npm run test:engine && npm run test:server && npm run calibrate",
+    "test:engine": "node test/engine.test.mjs",
+    "test:server": "node test/server.test.mjs",
+    "calibrate": "node tools/calibrate.mjs",
+    "check": "node --check server.js && node test/engine.test.mjs && node test/server.test.mjs && node tools/calibrate.mjs"
+  },
+  "keywords": [
+    "c-uas",
+    "counter-drone",
+    "simulation",
+    "trainer",
+    "defence",
+    "sih2026",
+    "SIH26247"
+  ],
+  "license": "MIT"
+}
